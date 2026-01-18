@@ -18,7 +18,7 @@ The game comprises 3 level stages, each with increasing difficulty and objective
 ## Multiple Weapon System
 Multiple Weapon Slot, dynnamic changes weapon using number key 1,2
 
-Weapon and ammo are available on world item. Pickup to update and change the Player Weapon. 3 type of weapon (Pistol, Rifle， Shotgun)
+Weapon and ammo are available on world item. Pickup to update and change the Player Weapon. 3 type of weapon (Pistol, Rifle, Shotgun)
 
 
 ## Player Movement
