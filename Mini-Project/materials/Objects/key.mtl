@@ -1,0 +1,12 @@
+# Blender 4.4.3 MTL File: 'None'
+# www.blender.org
+
+newmtl blinn6SG
+Ns 388.309967
+Ka 0.889908 0.889908 0.889908
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 3.800000
+d 1.000000
+illum 3
+map_Kd textures/blinn6SG_baseColor.png
