@@ -1,0 +1,32 @@
+# Blender 4.4.3 MTL File: 'None'
+# www.blender.org
+
+newmtl casitra.001
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures/buildings_ruins_0024_02.jpg
+
+newmtl casitra_NONE.001
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures/buildings_ruins_0024_02.jpg
+
+newmtl casitra_buildings_ruins_0024_02.jpg.002
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures/buildings_ruins_0024_02.jpg
