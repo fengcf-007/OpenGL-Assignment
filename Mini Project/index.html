@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Mini Project</title>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
+        canvas { display: block; }
+
+        #startScreen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        #startScreen h1 {
+            font-size: 48px;
+            margin-bottom: 40px;
+        }
+
+        #startScreen button {
+            font-size: 24px;
+            padding: 15px 40px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        #startScreen button:hover {
+            background-color: #45a049;
+        }
+
+        #exitButton {
+            background-color: #f44336;
+        }
+
+        #exitButton:hover {
+            background-color: #d32f2f;
+        }
+
+        #difficultyScreen {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 11;
+        }
+
+        #difficultyScreen button {
+            font-size: 24px;
+            padding: 15px 40px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #2196F3;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        #difficultyScreen button:hover {
+            background-color: #1976D2;
+        }
+
+        #difficultyDisplay {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            z-index: 6;
+        }
+
+        #ammoDisplay {
+            position: absolute;
+            top: 10px;
+            right: 100px;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            z-index: 6;
+            font-weight: bold;
+            user-select: none;
+        }
+
+        #ammoIcon {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+
+        #weaponName {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        #ammoCount {
+            font-size: 14px;
+        }
+
+        #crosshair {
+            position: absolute;
+            top: 60%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: white;
+            z-index: 10;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        #hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 18px;
+            z-index: 5;
+            user-select: none;
+        }
+
+        #playerHpBar {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 20px;
+            background-color: #555;
+            border-radius: 4px;
+            overflow: hidden;
+            z-index: 6;
+        }
+
+        .bar {
+            height: 100%;
+            transition: width 0.2s ease-in-out;
+        }
+
+        #playerHpFill {
+            background-color: #4CAF50;
+            width: 100%;
+        }
+
+        #enemyHpBars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .enemyHpBar {
+            position: absolute;
+            width: 100px;
+            height: 8px;
+            background: #555;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .enemyHpFill {
+            height: 100%;
+            background: #f44336;
+            transition: width 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Start Screen -->
+    <div id="startScreen">
+        <h1>My FPS Mini Game</h1>
+        <button onclick="startGame()">Start Game</button>
+        <button id="exitButton" onclick="exitGame()">Exit</button>
+    </div>
+
+    <!-- Difficulty Screen -->
+    <div id="difficultyScreen">
+        <h2>Select Difficulty</h2>
+        <button onclick="selectDifficulty(1)">1</button>
+        <button onclick="selectDifficulty(2)">2</button>
+        <button onclick="selectDifficulty(3)">3</button>
+    </div>
+
+    <!-- Dynamic Enemy HP Bars -->
+    <div id="enemyHpBars"></div>
+
+    <!-- Difficulty Display -->
+    <div id="difficultyDisplay">📶 Difficulty: 1</div>
+
+    <!-- Player HP Bar (just under the difficulty) -->
+    <div id="playerHpBar">
+        <div class="bar" id="playerHpFill"></div>
+    </div>
+
+    <!-- Ammo Display (Top-Right) -->
+    <div id="ammoDisplay">
+        <div id="weaponName">NONE</div>
+        <div id="ammoCount">0/0</div>
+
+        <div id="space">----------------</div>
+        <div id="weaponName_2">NONE</div>
+        <div id="ammoCount_2">0/0</div>
+    </div>
+
+    <!-- Crosshair (center of screen) -->
+    <div id="crosshair" style="display: none;">+</div>
+
+    <!-- HUD Overlay -->
+    <div id="hud">
+        <div id="target">🎯 Target: Tent</div>
+        <div id="enemyCount">👾 Enemies: 0</div>
+    </div>
+
+    <!-- Three.js and loaders -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.127.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.127.0/examples/js/loaders/MTLLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.127.0/examples/js/loaders/OBJLoader.js"></script>
+
+    <!-- Game logic -->
+    <script src="main.js"></script>
+
+    <!-- Game UI control -->
+    <script>
+
+        window.startGame = function () {
+            console.log("Start button clicked");
+            document.getElementById("startScreen").style.display = "none";
+            document.getElementById("difficultyScreen").style.display = "flex";
+        };
+
+        window.selectDifficulty = function (level) {
+            selectedDifficulty = level;
+            document.getElementById("difficultyScreen").style.display = "none";
+            launchGameWithDifficulty(level);
+        };
+
+        window.exitGame = function () {
+            if (confirm("Are you sure you want to exit?")) {
+                window.location.href = "https://www.google.com";
+            }
+        };
+    </script>
+</body>
+</html>
